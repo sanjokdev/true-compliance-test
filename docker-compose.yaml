@@ -1,0 +1,35 @@
+services:
+  laravel_12_app:
+    volumes:
+      - .:/laravel_app
+      - vendor:/laravel_app/vendor
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel12-starterkit:latest
+    container_name: laravel-truecompliance-app
+    ports:
+      - "8000:8000"      # Laravel app (artisan serve)
+    working_dir: /laravel_app
+    command: sh -c "php artisan serve --host=0.0.0.0"
+  database:
+    container_name: "laravel_true_compliance_db"
+    image: mysql:5.7.36
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --bind-address=0.0.0.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "123sanjok"
+      MYSQL_USER: "adminuser"
+      MYSQL_PASSWORD: "123sanjok"
+      MYSQL_DATABASE: true_compliance_db
+    ports:
+      - 3306:3306
+    volumes:
+      - /home/sgurung/mysql/laravel_vue_portfolio:/var/lib/mysql
+volumes:
+  vendor:
+  node_modules:
+networks:
+  local_network:
