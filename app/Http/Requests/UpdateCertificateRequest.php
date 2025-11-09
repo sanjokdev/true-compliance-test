@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateCertificateRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'stream_name' => ['sometimes', 'required', 'string', 'max:255'],
+            'issue_date' => ['sometimes', 'required', 'date_format:Y-m-d'],
+            'next_due_date' => ['sometimes', 'required', 'date_format:Y-m-d'],
+        ];
+    }
+}
