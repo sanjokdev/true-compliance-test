@@ -11,7 +11,7 @@ docker compose up --build -d
 ### Thing to note
 ## 1: Prefix routes with "api" since it is api endpoints.
 
-## 2:
+## 2: Creating certificates
 On the README.txt instructions you sent for the task, I got slightly confused when instructed to create a certificate like this 
 POST /certificate     - Creates a certificate D
 
