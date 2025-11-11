@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class CertificatesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a all certificates.
      */
     public function index()
     {
@@ -19,18 +19,24 @@ class CertificatesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a certificate.
      */
     public function show(Certificate $certificate)
     {
         return $certificate->toJson();
     }
 
+    /**
+     * Display notes related to a certificate.
+     */
     public function notes(Certificate $certificate)
     {
         return $certificate->notes->toJson();
     }
 
+    /**
+     * Store a notte related to a certificate.
+     */
     public function storeNote(StoreNoteRequest $request, Certificate $certificate)
     {
         $note = $certificate->notes()->create($request->validated());
