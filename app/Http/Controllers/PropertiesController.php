@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class PropertiesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all properties.
      */
     public function index()
     {
@@ -20,7 +20,7 @@ class PropertiesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new property.
      */
     public function store(StorePropertyRequest $request)
     {
@@ -29,7 +29,7 @@ class PropertiesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display single property.
      */
     public function show(Property $property)
     {
@@ -37,7 +37,7 @@ class PropertiesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a property.
      */
     public function update(UpdatePropertyRequest $request, Property $property)
     {
@@ -47,40 +47,58 @@ class PropertiesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete a property.
      */
     public function destroy(Property $property)
     {
         return $property->delete();
     }
 
+    /**
+     * Show certificates related to a property
+     */
     public function certificates(Property $property)
     {
         return $property->certificates->toJson();
     }
 
+     /**
+     * Store a certificate related to a property
+     */
     public function storeCertificate(StoreCertificateRequest $request, Property $property)
     {
         $certificate = $property->certificates()->create($request->validated());
         return $certificate;
     }
 
+     /**
+     * Show notes related to a property
+     */
     public function notes(Property $property)
     {
         return $property->notes;
     }
 
+     /**
+     * Store notes related to a property
+     */
     public function storeNote(StoreNoteRequest $request, Property $property)
     {
         $note = $property->notes()->create($request->validated());
         return $note;
     }
 
+     /**
+     * Using Eloquent query, getting properties with more than 5 certificates
+     */
     public function getPropertiesWithCertificatesMoreThan5Eloq()
     {
         return Property::has('certificates', '>', 5)->with('certificates')->get();
     }
 
+     /**
+     * Using Raw query, getting properties with more than 5 certificates
+     */
     public function getPropertiesWithCertificatesMoreThan5Raw()
     {
         $sql = "SELECT p.*,COUNT(c.id) as 'certificate_count'
