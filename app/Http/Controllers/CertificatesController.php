@@ -35,7 +35,7 @@ class CertificatesController extends Controller
     }
 
     /**
-     * Store a notte related to a certificate.
+     * Store a note related to a certificate.
      */
     public function storeNote(StoreNoteRequest $request, Certificate $certificate)
     {
